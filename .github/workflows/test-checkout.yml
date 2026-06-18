@@ -1,0 +1,34 @@
+name: Test Checkout Action
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test-checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify checkout succeeded
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "SHA: $GITHUB_SHA"
+          echo "Ref: $GITHUB_REF"
+
+      - name: Confirm files are present
+        run: |
+          test -f README.md || (echo "README.md not found" && exit 1)
+          test -f docker-compose.yml || (echo "docker-compose.yml not found" && exit 1)
+          echo "Expected files found"
+
+      - name: Confirm .git directory exists
+        run: |
+          test -d .git || (echo ".git directory missing" && exit 1)
+          echo ".git directory present"
+
+      - name: Verify git history is available
+        run: |
+          git log --oneline -5
+          git status
