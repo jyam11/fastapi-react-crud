@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './TaskForm.css';
 
 export default function TaskForm({ onSubmit, editingTask, onCancel }) {
   const [title, setTitle] = useState('');
@@ -23,10 +24,10 @@ export default function TaskForm({ onSubmit, editingTask, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={styles.form}>
-      <h2 style={styles.heading}>{editingTask ? 'Edit Task' : 'New Task'}</h2>
+    <form onSubmit={handleSubmit} className="task-form">
+      <h2 className="task-form__heading">{editingTask ? 'Edit Task' : 'New Task'}</h2>
       <input
-        style={styles.input}
+        className="task-form__input"
         type="text"
         placeholder="Task title *"
         value={title}
@@ -34,17 +35,17 @@ export default function TaskForm({ onSubmit, editingTask, onCancel }) {
         required
       />
       <textarea
-        style={{ ...styles.input, height: 80, resize: 'vertical' }}
+        className="task-form__input task-form__textarea"
         placeholder="Description (optional)"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
-      <div style={styles.buttons}>
-        <button type="submit" style={styles.btn}>
+      <div className="task-form__buttons">
+        <button type="submit" className="task-form__btn">
           {editingTask ? 'Update' : 'Add Task'}
         </button>
         {editingTask && (
-          <button type="button" onClick={onCancel} style={{ ...styles.btn, background: '#6c757d' }}>
+          <button type="button" onClick={onCancel} className="task-form__btn task-form__btn--cancel">
             Cancel
           </button>
         )}
@@ -52,11 +53,3 @@ export default function TaskForm({ onSubmit, editingTask, onCancel }) {
     </form>
   );
 }
-
-const styles = {
-  form: { background: '#fff', padding: 24, borderRadius: 8, boxShadow: '0 1px 4px rgba(0,0,0,0.1)', marginBottom: 24 },
-  heading: { marginBottom: 16, fontSize: 18, color: '#333' },
-  input: { display: 'block', width: '100%', padding: '10px 12px', marginBottom: 12, border: '1px solid #ddd', borderRadius: 6, fontSize: 15 },
-  buttons: { display: 'flex', gap: 8 },
-  btn: { padding: '10px 20px', background: '#4f46e5', color: '#fff', border: 'none', borderRadius: 6, fontSize: 15, cursor: 'pointer' },
-};
