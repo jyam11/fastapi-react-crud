@@ -1,4 +1,4 @@
-name: Test Checkout Actions
+name: Test Checkout Action
 
 on:
   push:
